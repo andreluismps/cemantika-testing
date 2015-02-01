@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<process xmlns="http://drools.org/drools-5.0/process"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+         xs:schemaLocation="http://drools.org/drools-5.0/process drools-processes-5.0.xsd"
+         type="RuleFlow" name="flow" id="1" package-name="cemantika.contextual.graph" >
+
+  <header>
+  </header>
+
+  <nodes>
+    <split id="2" name="Split" x="165" y="124" width="32" height="32" type="3" >
+      <constraints>
+        <constraint toNodeId="5" toType="DROOLS_DEFAULT" name="Iluminacao externa alta" priority="1" type="code" dialect="java" >return value &gt; 400;</constraint>
+        <constraint toNodeId="4" toType="DROOLS_DEFAULT" name="Iluminacao externa media" priority="1" type="code" dialect="java" >return value &lt;= 100 &amp;&amp; value &lt;= 400;</constraint>
+        <constraint toNodeId="3" toType="DROOLS_DEFAULT" name="Iluminacao externa baixa" priority="1" type="code" dialect="java" >//Classe LightSensor deve ser criada numa biblioteca de modelagem
+return lightSensor.getValue() &lt; 100;</constraint>
+      </constraints>
+    </split>
+    <actionNode id="3" name="Acionar iluminacao baixa" x="285" y="19" width="202" height="48" >
+        <action type="expression" dialect="java" >//Aciona backlight em intensidade baixa.</action>
+    </actionNode>
+    <actionNode id="4" name="Acionar iluminacao media" x="290" y="115" width="191" height="48" >
+        <action type="expression" dialect="java" >//Aciona backlight em intensidade media.</action>
+    </actionNode>
+    <actionNode id="5" name="Acionar iluminacao maxima" x="280" y="207" width="211" height="48" >
+        <action type="expression" dialect="java" >//Aciona backlight em intensidade alta.</action>
+    </actionNode>
+    <join id="6" name="Join" x="539" y="122" width="32" height="32" type="2" />
+    <end id="7" name="End" x="633" y="117" width="80" height="40" />
+    <start id="9" name="Start" x="20" y="119" width="80" height="40" />
+  </nodes>
+
+  <connections>
+    <connection from="9" to="2" />
+    <connection from="2" to="3" bendpoints="[180,42]" />
+    <connection from="2" to="4" />
+    <connection from="2" to="5" bendpoints="[180,230]" />
+    <connection from="3" to="6" />
+    <connection from="4" to="6" />
+    <connection from="5" to="6" />
+    <connection from="6" to="7" />
+  </connections>
+
+</process>
