@@ -1,28 +1,63 @@
 package cemantika.testing.cxg;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-@XmlRootElement(name="process")
 public class Grafo {
-	/*
-	private Connections connections;
-	private Nodes nodes;
+	private Map<String, LinkedHashSet<String>> map = new HashMap<String, LinkedHashSet<String>>();
+
+    public void adicionaAresta(String node1, String node2) {
+        LinkedHashSet<String> adjacente = map.get(node1);
+        if(adjacente==null) {
+            adjacente = new LinkedHashSet<String>();
+            map.put(node1, adjacente);
+        }
+        adjacente.add(node2);
+    }
+
+
+    public LinkedList<String> nosAdjacentes(String last) {
+        LinkedHashSet<String> adjacente = map.get(last);
+        if(adjacente==null) {
+            return new LinkedList<String>();
+        }
+        return new LinkedList<String>(adjacente);
+    }
 	
-	@XmlElement(name="connections")
-	public Connections getConnections() {
-		return connections;
-	}
-	public void setConnections(Connections connections) {
-		this.connections = connections;
+	public List<ArrayList<String>> listarCaminhos(Grafo grafo, String noInicial, String noFinal) {
+		ArrayList<String> visitado = new ArrayList<String>();
+    	visitado.add(noInicial);
+    	
+    	ArrayList<ArrayList<String>> caminhos = new ArrayList<ArrayList<String>>();
+    	
+		listarCaminhos(grafo, visitado, caminhos, noInicial, noFinal);
+		return caminhos;
 	}
 	
-	@XmlElement(name="nodes")
-	public Nodes getNodes() {
-		return nodes;
+	private void listarCaminhos(Grafo grafo, List<String> visitado, List<ArrayList<String>> caminhos, String noAtual, String noFinal) {        
+	    
+		if (noAtual.equals(noFinal)) { 
+	        caminhos.add(new ArrayList(Arrays.asList(visitado.toArray())));
+	        return;
+	    }
+	    else {
+	        LinkedList<String> nodes = grafo.nosAdjacentes(noAtual);    
+	        for (String node : nodes) {
+	            if (visitado.contains(node)) {
+	                continue;
+	            } 
+	            List<String> temp = new ArrayList<String>();
+	            temp.addAll(visitado);
+	            temp.add(node);          
+	            listarCaminhos(grafo, temp, caminhos, node, noFinal);
+	        }
+	    }
 	}
-	public void setNodes(Nodes nodes) {
-		this.nodes = nodes;
-	}
-	*/
+	
+    
 }
