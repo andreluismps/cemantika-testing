@@ -10,10 +10,9 @@
   <nodes>
     <split id="2" name="Split" x="165" y="124" width="32" height="32" type="3" >
       <constraints>
-        <constraint toNodeId="5" toType="DROOLS_DEFAULT" name="Iluminacao externa alta" priority="1" type="code" dialect="java" >return value &gt; 400;</constraint>
-        <constraint toNodeId="4" toType="DROOLS_DEFAULT" name="Iluminacao externa media" priority="1" type="code" dialect="java" >return value &lt;= 100 &amp;&amp; value &lt;= 400;</constraint>
-        <constraint toNodeId="3" toType="DROOLS_DEFAULT" name="Iluminacao externa baixa" priority="1" type="code" dialect="java" >//Classe LightSensor deve ser criada numa biblioteca de modelagem
-return lightSensor.getValue() &lt; 100;</constraint>
+        <constraint toNodeId="5" toType="DROOLS_DEFAULT" name="Iluminacao externa alta" priority="1" type="code" dialect="java" >LightSensor.getValue() &gt; 400;</constraint>
+        <constraint toNodeId="4" toType="DROOLS_DEFAULT" name="Iluminacao externa media" priority="1" type="code" dialect="java" >LightSensor.getValue()  &lt;= 100 &amp;&amp; LightSensor.getValue() &lt;= 400;</constraint>
+        <constraint toNodeId="3" toType="DROOLS_DEFAULT" name="Iluminacao externa baixa" priority="1" type="code" dialect="java" >LightSensor.getValue() &lt; 100;</constraint>
       </constraints>
     </split>
     <actionNode id="3" name="Acionar iluminacao baixa" x="285" y="19" width="202" height="48" >

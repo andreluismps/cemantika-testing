@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<process xmlns="http://drools.org/drools-5.0/process"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+         xs:schemaLocation="http://drools.org/drools-5.0/process drools-processes-5.0.xsd"
+         type="RuleFlow" name="Professor Book Transport" id="ProfessorBookTransport" package-name="contextualgraphs" >
+
+  <header>
+    <imports>
+      <import name="cemantika.example.academicmissionsupport.ProfessorBookTransport" />
+    </imports>
+    <variables>
+      <variable name="professorBookTransport" >
+        <type name="org.drools.process.core.datatype.impl.type.ObjectDataType" className="cemantika.example.academicmissionsupport.ProfessorBookTransport" />
+      </variable>
+    </variables>
+  </header>
+
+  <nodes>
+    <start id="1" name="Start" x="21" y="207" width="80" height="40" />
+    <end id="2" name="End" x="1092" y="134" width="80" height="40" />
+    <split id="3" name="CE1" x="191" y="201" width="80" height="40" type="2" >
+      <constraints>
+        <constraint toNodeId="6" toType="DROOLS_DEFAULT" priority="1" type="rule" dialect="mvel" >ProfessorBookTransport(missionLocation == professorLivingLocation)</constraint>
+        <constraint toNodeId="4" toType="DROOLS_DEFAULT" priority="1" type="rule" dialect="mvel" >ProfessorBookTransport(missionLocation != professorLivingLocation)</constraint>
+      </constraints>
+    </split>
+    <split id="4" name="CE2" x="253" y="132" width="80" height="40" type="2" >
+      <constraints>
+        <constraint toNodeId="8" toType="DROOLS_DEFAULT" priority="1" type="rule" dialect="mvel" >ProfessorBookTransport(whoPaysMission == "missionary")</constraint>
+        <constraint toNodeId="5" toType="DROOLS_DEFAULT" priority="1" type="rule" dialect="mvel" >ProfessorBookTransport(whoPaysMission == "CAPES")</constraint>
+      </constraints>
+    </split>
+    <actionNode id="5" name="Contact CAPES" x="538" y="54" width="146" height="40" >
+        <action type="expression" dialect="java" >professorBookTransport.contactCAPESOfficialAgency();</action>
+    </actionNode>
+    <join id="6" name="Join" x="1024" y="202" width="80" height="40" type="2" />
+    <join id="7" name="Join" x="888" y="139" width="80" height="40" type="2" />
+    <actionNode id="8" name="Lookup Transport" x="297" y="236" width="167" height="40" >
+        <action type="expression" dialect="java" >professorBookTransport.lookupTransport();</action>
+    </actionNode>
+    <split id="9" name="CE3" x="496" y="236" width="80" height="40" type="2" >
+      <constraints>
+        <constraint toNodeId="10" toType="DROOLS_DEFAULT" priority="1" type="rule" dialect="mvel" >ProfessorBookTransport(professorAge &gt;= 26 &amp;&amp; &lt; 50)</constraint>
+        <constraint toNodeId="13" toType="DROOLS_DEFAULT" priority="1" type="rule" dialect="mvel" >ProfessorBookTransport(professorAge &gt; 50)</constraint>
+        <constraint toNodeId="12" toType="DROOLS_DEFAULT" priority="1" type="rule" dialect="mvel" >ProfessorBookTransport(professorAge &lt; 26)</constraint>
+      </constraints>
+    </split>
+    <join id="10" name="Join" x="763" y="237" width="80" height="40" type="2" />
+    <actionNode id="11" name="Show Transports" x="852" y="303" width="162" height="40" >
+        <action type="expression" dialect="java" >professorBookTransport.showTransportOptions();</action>
+    </actionNode>
+    <actionNode id="12" name="Classify by Price" x="570" y="144" width="156" height="40" >
+        <action type="expression" dialect="java" >professorBookTransport.classifyByPrice();</action>
+    </actionNode>
+    <actionNode id="13" name="Classify by Comfort" x="562" y="318" width="172" height="40" >
+        <action type="expression" dialect="java" >professorBookTransport.classifyByComfort();</action>
+    </actionNode>
+    <actionNode id="14" name="Book Transport" x="854" y="218" width="146" height="40" >
+        <action type="expression" dialect="java" >professorBookTransport.bookTransport();</action>
+    </actionNode>
+    <milestone id="15" name="Online?" x="104" y="145" width="80" height="40" >
+      <constraint type="rule" dialect="mvel" >ProfessorBookTransport(professorAvailability == 1)</constraint>
+      <onEntry>
+        <action type="expression" dialect="mvel" >System.out.println("Execute ProfessorBookTransport when she/he is online.");</action>
+      </onEntry>
+      <onExit>
+        <action type="expression" dialect="java" >update(professorBookTransport);
+System.out.println("Professor online, let's help him to choose the transport.");</action>
+      </onExit>
+    </milestone>
+  </nodes>
+
+  <connections>
+    <connection from="6" to="2" />
+    <connection from="15" to="3" />
+    <connection from="3" to="4" bendpoints="[228,153]" />
+    <connection from="4" to="5" bendpoints="[291,76]" />
+    <connection from="7" to="6" bendpoints="[1062,158]" />
+    <connection from="3" to="6" bendpoints="[234,391;1065,381]" />
+    <connection from="5" to="7" bendpoints="[925,73]" />
+    <connection from="14" to="7" />
+    <connection from="4" to="8" bendpoints="[381,151]" />
+    <connection from="8" to="9" />
+    <connection from="13" to="10" bendpoints="[761,339]" />
+    <connection from="12" to="10" bendpoints="[759,163]" />
+    <connection from="9" to="10" />
+    <connection from="10" to="11" bendpoints="[814,318]" />
+    <connection from="9" to="12" bendpoints="[535,165]" />
+    <connection from="9" to="13" bendpoints="[536,338]" />
+    <connection from="11" to="14" />
+    <connection from="1" to="15" />
+  </connections>
+
+</process>
