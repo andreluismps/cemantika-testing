@@ -103,7 +103,6 @@ public class LeitorGrafo {
 	        for (String node : path) {
 	            //System.out.print(node);
 	           // System.out.print(" - ");
-	            //List<String> adjacentes = grafo.nosAdjacentes(node);
 	            if (pos != 0){
 	            	System.out.print("no contextual: " + path.get(pos));
 	            	System.out.println(";   no proximo: " + node);
