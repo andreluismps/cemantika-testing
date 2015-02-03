@@ -7,8 +7,13 @@ import cemantika.testing.model.Dominio;
 
 public class GeradorCasoTeste {
 
-	public List<CasoTeste> gerarCasosTeste(List<Dominio> dominiosEC) {
-		// TODO Auto-generated method stub
+	public List<CasoTeste> gerarCasosTeste(List<List<Dominio>> dominiosEC) {
+		for (List<Dominio> list : dominiosEC) {
+			// Para cada dom’nio, gerar casos de teste
+			for (Dominio dominio : list) {
+				
+			}
+		}
 		return null;
 	}
 

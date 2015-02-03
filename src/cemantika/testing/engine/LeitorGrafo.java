@@ -28,8 +28,10 @@ import cemantika.testing.cxg.xsd.Start;
 import cemantika.testing.model.Dominio;
 
 public class LeitorGrafo {
-	public List<Dominio> lerGrafo(File grafoContextual) throws JAXBException, FileNotFoundException, XMLStreamException{
+	public List<List<Dominio>> lerGrafo(File grafoContextual) throws JAXBException, FileNotFoundException, XMLStreamException{
 		
+		List<List<Dominio>> dominiosGrafo = new ArrayList<List<Dominio>>();
+        
 		XMLInputFactory xif = XMLInputFactory.newFactory();
         StreamSource xml = new StreamSource(grafoContextual);
         XMLStreamReader xsr = xif.createXMLStreamReader(xml);
@@ -96,9 +98,12 @@ public class LeitorGrafo {
         int pos = 0;
         int ctCount = 0;
         Constraints constraints;
+        List<Dominio> dominios;
+        Dominio dominio;
         for(ArrayList<String> path : caminhos){
         	i = 0;
         	ctCount++;
+        	dominios = new ArrayList<Dominio>();
         	System.out.println("\nCT" + ctCount + ":");
 	        for (String node : path) {
 	            //System.out.print(node);
@@ -114,6 +119,12 @@ public class LeitorGrafo {
 	            					for (Constraint constraint : constraints.getConstraint()) {
 	            						if(constraint.getToNodeId().equals(node)){
 											System.out.println(constraint.getValue());
+											String [] values = constraint.getValue().split("&&");
+											for (String value : values) {
+												dominio = new Dominio(value.trim());
+												dominios.add(dominio);
+											}
+											
 										}
 									}
 								}
@@ -130,11 +141,12 @@ public class LeitorGrafo {
 				}
 	            i++;
 	        }
+	        dominiosGrafo.add(dominios);
 	        System.out.println();
 	    }
         xsr.close();
 
 		
-		return null;
+		return dominiosGrafo;
 	}
 }

@@ -12,7 +12,7 @@ import cemantika.testing.model.Dominio;
 
 public class Engine {
 	File gerarCasoTeste(File gc) throws FileNotFoundException, JAXBException, XMLStreamException {
-		List<Dominio> dominiosEC = new LeitorGrafo().lerGrafo(gc);
+		List<List<Dominio>> dominiosEC = new LeitorGrafo().lerGrafo(gc);
 		
 		List<CasoTeste> casosTeste = new GeradorCasoTeste().gerarCasosTeste(dominiosEC);
 		

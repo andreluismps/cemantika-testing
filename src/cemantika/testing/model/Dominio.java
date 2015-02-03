@@ -1,19 +1,37 @@
 package cemantika.testing.model;
 
 
+
 public class Dominio {
-	private String original;
+	
 	private TipoElementoContextual tipoEC;
 	private OperadorRelacional operador;
 	private String valor;
+	private String original;
 	
 	public Dominio(String valorOriginal){
 		this.original = valorOriginal;
 		//parse das regras de negocio
-		String [] chaves = valorOriginal.split(".");
-		if (chaves.equals(TipoElementoContextual.LUMINOSIDADE.getFonteContexto())){
-			tipoEC = TipoElementoContextual.LUMINOSIDADE;
+		
+		String [] chaves = valorOriginal.split("\\.");
+		
+		for (TipoElementoContextual tipoEC : TipoElementoContextual.values()) {
+			if (chaves[0].equals(tipoEC.getFonteContexto())){
+				this.tipoEC = tipoEC;
+				break;
+			}
 		}
+		
+		String [] chaves2 = chaves[1].split(" ");
+		
+		for (OperadorRelacional operador : OperadorRelacional.values()) {
+			if (chaves2[1].equals(operador.getOperadorRelacional())){
+				this.operador = operador;
+				break;
+			}
+		}
+		
+		valor = chaves2[2];
 	}
 	
 	public String getOriginal() {
