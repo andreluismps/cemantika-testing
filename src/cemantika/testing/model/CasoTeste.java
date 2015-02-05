@@ -1,19 +1,23 @@
 package cemantika.testing.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CasoTeste {
-	private TipoElementoContextual tipoEC;
-	private int valor;
 	
-	public TipoElementoContextual getTipoEC() {
-		return tipoEC;
+	private List<ValorElementoContextual> valores;
+	
+	public CasoTeste(){
+		valores = new ArrayList<ValorElementoContextual>();
 	}
-	public void setTipoEC(TipoElementoContextual tipoEC) {
-		this.tipoEC = tipoEC;
+
+	public List<ValorElementoContextual> getValores() {
+		return valores;
 	}
-	public int getValor() {
-		return valor;
+
+	public void setValores(List<ValorElementoContextual> valores) {
+		this.valores = valores;
 	}
-	public void setValor(int valor) {
-		this.valor = valor;
-	}
+	
+	
 }

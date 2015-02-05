@@ -119,12 +119,8 @@ public class LeitorGrafo {
 	            					for (Constraint constraint : constraints.getConstraint()) {
 	            						if(constraint.getToNodeId().equals(node)){
 											System.out.println(constraint.getValue());
-											String [] values = constraint.getValue().split("&&");
-											for (String value : values) {
-												dominio = new Dominio(value.trim());
-												dominios.add(dominio);
-											}
-											
+											dominio = new Dominio(constraint.getValue());
+											dominios.add(dominio);
 										}
 									}
 								}
