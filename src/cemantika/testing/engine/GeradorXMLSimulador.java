@@ -8,8 +8,9 @@ import cemantika.testing.model.CasoTeste;
 public class GeradorXMLSimulador {
 
 	public File gerarSequenciaTemporal(List<CasoTeste> casosReduzidos) {
-		// TODO Auto-generated method stub
-		return null;
+		File xmlSimulador = new File("src/cemantika/testing/engine/controle_iluminacao_tela_teste.xml");
+		
+		return xmlSimulador;
 	}
 
 }
