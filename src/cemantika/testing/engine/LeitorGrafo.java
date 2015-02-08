@@ -45,7 +45,7 @@ public class LeitorGrafo {
         JAXBElement<cemantika.testing.cxg.xsd.Process> jb = unmarshaller.unmarshal(xsr, cemantika.testing.cxg.xsd.Process.class);
         cemantika.testing.cxg.xsd.Process p = jb.getValue();
 
-        Nodes nos = null;;
+        Nodes nos = null;
         Connections connections = null;
         Start start = null;
         End end = null;

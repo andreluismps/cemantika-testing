@@ -3,8 +3,6 @@ bin/cemantika/testing/model/Dominio.class
 
 *.class
 
-bin/cemantika/testing/cxg/xsd/drools-processes-5.0.xsd
+bin/
 
-bin/cemantika/testing/engine/drools-processes-5.0.xsd
-
-bin/cemantika/testing/engine/controle_iluminacao_tela.rf
+src/cemantika/testing/engine/controle_iluminacao_tela_teste.xml
