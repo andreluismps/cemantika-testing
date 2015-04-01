@@ -10,7 +10,6 @@ public class Principal {
 	
 	
 	public static void main(String[] args) throws FileNotFoundException, JAXBException, XMLStreamException{
-		new Engine().gerarCasoTeste(new File("src/cemantika/testing/engine/controle_iluminacao_tela.rf"));
-		//new Engine().gerarCasoTeste(new File("src/cemantika/testing/engine/ProfessorBookTransport.rf"));
+		new Engine().gerarCasoTeste(new File("src/cemantika/testing/engine/controle_iluminacao_tela.rf"), null);
 	}
 }

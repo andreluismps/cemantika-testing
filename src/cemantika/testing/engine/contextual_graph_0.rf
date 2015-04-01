@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<process xmlns="http://drools.org/drools-5.0/process"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+         xs:schemaLocation="http://drools.org/drools-5.0/process drools-processes-5.0.xsd"
+         type="RuleFlow" name="contextual_graph_0" id="contextual_graph_0" package-name="cemantika.contextual.graph" >
+
+  <header>
+    <variables>
+      <variable name="perigo" >
+        <type name="org.drools.process.core.datatype.impl.type.ObjectDataType" className="cemantika.model.Perigo" />
+      </variable>
+      <variable name="usuario" >
+        <type name="org.drools.process.core.datatype.impl.type.ObjectDataType" className="cemantika.model.Usuario" />
+      </variable>
+    </variables>
+  </header>
+
+  <nodes>
+    <start id="1" name="In’cio" x="15" y="126" width="80" height="40" />
+    <end id="2" name="Fim" x="750" y="126" width="80" height="40" />
+    <split id="3" name="Split" x="262" y="131" width="80" height="40" type="2" >
+      <constraints>
+        <constraint toNodeId="5" toType="DROOLS_DEFAULT" name="N‹o existe perigo" priority="1" type="code" dialect="java" >return !usuario.getLocalizacaoAtual().equals(perigo.getLocalizacao());</constraint>
+        <constraint toNodeId="4" toType="DROOLS_DEFAULT" name="Existe perigo" priority="1" type="code" dialect="java" >return usuario.getLocalizacaoAtual().equals(perigo.getLocalizacao());</constraint>
+      </constraints>
+    </split>
+    <actionNode id="4" name="Exibe Alerta" x="374" y="15" width="198" height="48" >
+        <action type="expression" dialect="java" >System.out.println("Exibe Alerta");</action>
+    </actionNode>
+    <join id="5" name="Join" x="633" y="131" width="32" height="32" type="2" />
+  </nodes>
+
+  <connections>
+    <connection from="5" to="2" />
+    <connection from="1" to="3" />
+    <connection from="3" to="4" bendpoints="[277,39]" />
+    <connection from="4" to="5" bendpoints="[648,38]" />
+    <connection from="3" to="5" />
+  </connections>
+
+</process>

@@ -12,6 +12,12 @@ public class ValorElementoContextual {
 	
 	private String descricao;
 	
+	private String tempo;
+	
+	public ValorElementoContextual(){
+		this.setTempo("1");
+	}
+	
 	@XmlAttribute
 	public TipoElementoContextual getTipoEC() {
 		return tipoEC;
@@ -33,6 +39,13 @@ public class ValorElementoContextual {
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	@XmlAttribute
+	public String getTempo() {
+		return tempo;
+	}
+	public void setTempo(String tempo) {
+		this.tempo = tempo;
 	}
 	@Override
 	public String toString() {

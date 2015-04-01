@@ -11,8 +11,8 @@ import cemantika.testing.model.CasoTeste;
 import cemantika.testing.model.Dominio;
 
 public class Engine {
-	File gerarCasoTeste(File gc) throws FileNotFoundException, JAXBException, XMLStreamException {
-		List<List<Dominio>> dominiosEC = new LeitorGrafo().lerGrafo(gc);
+	File gerarCasoTeste(File contextualGraph, File umlClassDiagram) throws FileNotFoundException, JAXBException, XMLStreamException {
+		List<List<Dominio>> dominiosEC = new LeitorGrafo().lerGrafo(contextualGraph, umlClassDiagram);
 		
 		List<CasoTeste> casosTeste = new GeradorCasoTeste().gerarCasosTeste(dominiosEC);
 		

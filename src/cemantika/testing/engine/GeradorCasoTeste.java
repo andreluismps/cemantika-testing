@@ -14,16 +14,19 @@ public class GeradorCasoTeste {
 	public List<CasoTeste> gerarCasosTeste(List<List<Dominio>> dominiosEC) {
 		List<CasoTeste> casosTeste = new ArrayList<CasoTeste>();
 		CasoTeste casoTeste;
+		int casoTesteCont = 0;
 		for (List<Dominio> list : dominiosEC) {
 			// Para cada dom’nio, gerar casos de teste
 			//casosTeste = new ArrayList<CasoTeste>();
 			casoTeste = new CasoTeste();
 			List<ValorElementoContextual> valoresDominio = new ArrayList<ValorElementoContextual>();
 			int dominios = 0;
+			casoTesteCont++;
 			for (Dominio dominio : list) {
 				dominios++;
+				System.out.println("Caso de teste para o caminho " + casoTesteCont + " do grafo:\n - Dom’nio: " + dominio.getOriginal());
 				valoresDominio.add(gerarValorContexto(dominio));
-				
+				System.out.println(" - Valor gerado:\n  - " + valoresDominio.get(dominios - 1).toString()+ "\n");
 				//casoTeste = new CasoTeste();
 				
 				//casosTeste.add(casoTeste);

@@ -1,7 +1,7 @@
 package cemantika.testing.model;
 
 public enum TipoElementoContextual {
-	LUMINOSIDADE("LightSensor");
+	LIGHT_SENSOR("LightSensor");
 	private final String fonteContexto;
 	
 	private TipoElementoContextual(String fonte) {

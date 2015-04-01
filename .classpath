@@ -2,5 +2,21 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/xstream.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/xpp3.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/xpp3_min.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/mvel2.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/jxl.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/jsr94.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/joda-time.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/drools-templates.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/drools-jsr94.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/drools-decisiontables.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/drools-core.jar" sourcepath="/Users/andreluismps/Downloads/drools-5.0-src.zip"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/drools-compiler.jar" sourcepath="/Users/andreluismps/Downloads/drools-5.0-src.zip"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/drools-api.jar" sourcepath="/Users/andreluismps/Downloads/drools-5.0-src.zip"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/org.drools.eclipse-5.0.1/antlr-runtime.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/Downloads/eclipse0/plugins/org.eclipse.jdt.core_3.5.2.v_981_R35x.jar"/>
+	<classpathentry kind="lib" path="/Users/andreluismps/git/cemantika-modeling/cemantika-modeling/org.cemantika.modeling/cemantika-0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
