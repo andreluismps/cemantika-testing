@@ -1,7 +1,10 @@
 package cemantika.testing.engine;
 
+import java.beans.Introspector;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,10 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.stream.StreamSource;
 
+import org.cemantika.metamodel.structure.AcquisitionAssociation;
+import org.cemantika.metamodel.structure.ContextSource;
+import org.cemantika.metamodel.structure.ContextualElement;
+import org.cemantika.metamodel.structure.UpdateType;
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.KnowledgeBuilder;
@@ -22,6 +29,7 @@ import org.drools.builder.ResourceType;
 import org.drools.definition.process.Node;
 import org.drools.io.ResourceFactory;
 import org.drools.process.core.Context;
+import org.drools.process.core.context.variable.VariableScope;
 import org.drools.process.core.impl.ProcessImpl;
 import org.drools.ruleflow.core.RuleFlowProcess;
 import org.drools.runtime.StatefulKnowledgeSession;
@@ -189,29 +197,14 @@ public class LeitorGrafo {
 	/*
 	 * teste com a api do jboss drools. Nao deu certo pois não era possível obter as variáveis de constraint.
 	 * Apos modificação no Jboss drools foi possível obter as constraints.
-	 * Proximo passo: obter as fontes de contexto dos atributos usados nos nós contextuais. 
+	 * Proximo passo: obter as fontes de contexto dos atributos usados nos nós contextuais.
+	 * Identificado problema grave: como mapear a AcquisitionAssociation no código-fonte??? Talvez seja necessário realizar a verificação no modelo mesmo. 
 	 */
 	public static final void main(String[] args) {
         try {
             KnowledgeBase knowledgeBase = readRule();
             StatefulKnowledgeSession ksession = knowledgeBase.newStatefulKnowledgeSession();
-
-            // logging all work items to System.out
-            WorkItemHandler handler = new WorkItemHandler() {
-				public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
-					System.out.println("Executing work item " + workItem);
-			        manager.completeWorkItem(workItem.getId(), null);
-				}
-            	
-				public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
-					// Do nothing
-				}
-            };
-            //ksession.getWorkItemManager().registerWorkItemHandler( "Email", handler );
-            //ksession.getWorkItemManager().registerWorkItemHandler( "Log", handler );
-
-            //ksession.startProcess( "cemantika.contextual.graph.contextual_graph_0" );
-            
+                        
             RuleFlowProcess p = (RuleFlowProcess)  ksession.getKnowledgeBase().getProcess("contextual_graph_0");
             //Node node = p.getNode(3);
             for (Node node : p.getNodes()) {
@@ -223,12 +216,71 @@ public class LeitorGrafo {
 						System.out.println(constraint.getName());
 			            System.out.println(constraint.getConstraint());
 			            String condition = constraint.getConstraint();
+			            condition.toLowerCase();
+			            condition = condition.replace("return ", "").replace(".equals", "  ")
+			            					 .replace("!", "    ").replace("&&", "  ")
+			            					 .replace("||", " ").replace('(', '\0')
+			            					 .replace(')', '\0').replace(';', '\0')
+			            					 .replace(".get", ".").replaceAll("(?:/\\*(?:[^*]|(?:\\*+[^*/]))*\\*+/)|(?://.*)","")
+			            					 .trim().replaceAll(" +", " ");
+			            List<Context>contexts = p.getContexts("VariableScope");
+			            VariableScope varscope = (VariableScope) contexts.get(0);
+			            List<org.drools.process.core.context.variable.Variable> vars = varscope.getVariables();
 			            
+			            String [] statements = condition.split(" ");
+			            for (String statement : statements) {
+			            	statement = statement.trim();
+			            	String [] statmentElements = statement.split("\\.");
+			            	String statementVariable = statmentElements[0];
+			            	Class clazz = null;
+			            	org.drools.process.core.context.variable.Variable variable = null;
+			            	for (org.drools.process.core.context.variable.Variable var : vars) {
+								if (var.getName().equals(statementVariable)) {
+									variable = var;
+									clazz = Class.forName(var.getType().getStringType());
+								}
+							}
+			            	
+			            	int i = 0;
+			            	Field field = null;
+			            	List<UpdateType> updateTypes = new ArrayList<UpdateType>();
+			            	for (String statmentElement : statmentElements) {
+			            		statmentElement = Introspector.decapitalize(statmentElement);
+			            		if (i != 0) {
+			            			Field[] fields = clazz.getDeclaredFields();
+			            			for (Field field2 : fields) {
+										if (field2.getName().equals(statmentElement)){
+											field = field2;
+										}
+									}
+			            			//field = clazz.getClass().getDeclaredField(statmentElement);
+			            			if (field.getAnnotation(ContextualElement.class) != null){
+			            				Class contextSourceClazz = field.getType();
+		            					if (contextSourceClazz.getAnnotation(ContextSource.class) != null){
+		            						Field[] contextSourceFields = contextSourceClazz.getFields();
+		            						for (Field contextSourceField : contextSourceFields) {
+		            							Annotation[] annotations = contextSourceField.getAnnotations();
+		            							for (Annotation annotation : annotations) {
+		            								AcquisitionAssociation acquisitionAssociation = null;
+													if (annotation instanceof AcquisitionAssociation){
+														acquisitionAssociation = (AcquisitionAssociation) annotation;
+														if (acquisitionAssociation.element().equalsIgnoreCase(statmentElements[i-1] + "." + statmentElements[i])){
+															updateTypes.add(acquisitionAssociation.updateFrequency());
+														}
+													}
+												}
+											}
+		            					}
+			            			}
+								}
+								i++;
+							}
+						}
+			            
+			            System.out.println(condition);
 					}
 				}
 			}
-            
-            //ksession.fireAllRules();
         } catch ( Throwable t ) {
             t.printStackTrace();
         }

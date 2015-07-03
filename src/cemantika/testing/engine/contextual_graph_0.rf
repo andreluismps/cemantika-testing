@@ -5,6 +5,10 @@
          type="RuleFlow" name="contextual_graph_0" id="contextual_graph_0" package-name="cemantika.contextual.graph" >
 
   <header>
+    <imports>
+      <import name="cemantika.model.Usuario" />
+      <import name="cemantika.model.Perigo" />
+    </imports>
     <variables>
       <variable name="perigo" >
         <type name="org.drools.process.core.datatype.impl.type.ObjectDataType" className="cemantika.model.Perigo" />
